@@ -1,0 +1,38 @@
+{
+  "auth": {
+    "register": {
+      "success": "Đăng ký thành công",
+      "email_exists": "Email đã được sử dụng",
+      "supabase_error": "Không thể tạo tài khoản trong Supabase"
+    },
+    "login": {
+      "success": "Đăng nhập thành công",
+      "invalid_credentials": "Email hoặc mật khẩu không đúng",
+      "user_not_found": "Người dùng không tồn tại trong hệ thống"
+    },
+    "validation": {
+      "user_not_found": "Người dùng không tồn tại"
+    }
+  },
+  "users": {
+    "not_found": "Người dùng không tồn tại",
+    "update": {
+      "success": "Cập nhật người dùng thành công",
+      "forbidden": "Không có quyền cập nhật thông tin người dùng này"
+    },
+    "delete": {
+      "success": "Xóa người dùng thành công",
+      "forbidden": "Không có quyền xóa người dùng",
+      "self_delete": "Không thể xóa tài khoản của chính mình"
+    },
+    "list": {
+      "forbidden": "Không có quyền xem danh sách người dùng"
+    }
+  },
+  "validation": {
+    "email": "Định dạng email không hợp lệ",
+    "required": "Trường này là bắt buộc",
+    "string": "Phải là chuỗi ký tự",
+    "min_length": "Độ dài tối thiểu là {{min}} ký tự"
+  }
+} 

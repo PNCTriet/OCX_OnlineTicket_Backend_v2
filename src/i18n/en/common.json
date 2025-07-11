@@ -1,0 +1,38 @@
+{
+  "auth": {
+    "register": {
+      "success": "Registration successful",
+      "email_exists": "Email already exists",
+      "supabase_error": "Unable to create account in Supabase"
+    },
+    "login": {
+      "success": "Login successful",
+      "invalid_credentials": "Invalid email or password",
+      "user_not_found": "User not found in system"
+    },
+    "validation": {
+      "user_not_found": "User not found"
+    }
+  },
+  "users": {
+    "not_found": "User not found",
+    "update": {
+      "success": "User updated successfully",
+      "forbidden": "No permission to update this user"
+    },
+    "delete": {
+      "success": "User deleted successfully",
+      "forbidden": "No permission to delete user",
+      "self_delete": "Cannot delete your own account"
+    },
+    "list": {
+      "forbidden": "No permission to view user list"
+    }
+  },
+  "validation": {
+    "email": "Invalid email format",
+    "required": "This field is required",
+    "string": "Must be a string",
+    "min_length": "Minimum length is {{min}} characters"
+  }
+} 
