@@ -3,6 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { ConfigModule } from '@nestjs/config';
+import { ValidationPipe } from '@nestjs/common';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -18,6 +19,8 @@ describe('AppController (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
+    app.setGlobalPrefix('api');
+    app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
     await app.init();
   });
 
@@ -25,50 +28,49 @@ describe('AppController (e2e)', () => {
     await app.close();
   });
 
-  it('/api/auth/register (POST)', () => {
+  it('/api/docs (GET) - Swagger documentation', () => {
     return request(app.getHttpServer())
+      .get('/docs')
+      .expect(200);
+  });
+
+  it('/api/auth/register (POST)', async () => {
+    const response = await request(app.getHttpServer())
       .post('/api/auth/register')
       .send({
         email: 'test@example.com',
         name: 'Test User',
         password: 'password123',
         phone: '1234567890',
-      })
-      .expect(201)
-      .expect((res) => {
-        expect(res.body).toHaveProperty('accessToken');
-        expect(res.body).toHaveProperty('user');
-        expect(res.body.user.email).toBe('test@example.com');
       });
-  });
+    
+    expect(response.status).toBe(201);
+    expect(response.body).toHaveProperty('accessToken');
+    expect(response.body).toHaveProperty('user');
+    expect(response.body.user.email).toBe('test@example.com');
+  }, 15000);
 
-  it('/api/auth/login (POST)', () => {
-    return request(app.getHttpServer())
+  it('/api/auth/login (POST)', async () => {
+    const response = await request(app.getHttpServer())
       .post('/api/auth/login')
       .send({
         email: 'test@example.com',
         password: 'password123',
-      })
-      .expect(200)
-      .expect((res) => {
-        expect(res.body).toHaveProperty('accessToken');
-        expect(res.body).toHaveProperty('user');
       });
-  });
+    
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('accessToken');
+    expect(response.body).toHaveProperty('user');
+  }, 15000);
 
-  it('/api/auth/login (POST) - invalid credentials', () => {
-    return request(app.getHttpServer())
+  it('/api/auth/login (POST) - invalid credentials', async () => {
+    const response = await request(app.getHttpServer())
       .post('/api/auth/login')
       .send({
         email: 'wrong@example.com',
         password: 'wrongpassword',
-      })
-      .expect(401);
-  });
-
-  it('/api/docs (GET) - Swagger documentation', () => {
-    return request(app.getHttpServer())
-      .get('/docs')
-      .expect(200);
-  });
+      });
+    
+    expect(response.status).toBe(401);
+  }, 15000);
 }); 
