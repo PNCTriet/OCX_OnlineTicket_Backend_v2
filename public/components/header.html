@@ -1,0 +1,37 @@
+<!-- Header Component -->
+<nav class="bg-dark-900 border-b border-dark-800 px-4 py-3">
+    <div class="flex justify-between items-center">
+        <div class="flex items-center space-x-3">
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="mobile-menu-btn md:hidden">
+                <i class="ti ti-menu text-lg"></i>
+            </button>
+            
+                                        <h1 id="page-title" class="text-lg font-semibold" data-i18n="page_title">Page Title</h1>
+        </div>
+        <div class="flex items-center space-x-4">
+            <!-- Language Selector -->
+            <div class="relative">
+                <button id="language-btn" class="flex items-center text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                    <i class="ti ti-language mr-2"></i>
+                    <span id="current-lang">EN</span>
+                </button>
+                <div id="language-dropdown" class="absolute right-0 mt-2 w-32 bg-dark-800 rounded-md shadow-lg py-1 z-50 hidden">
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-dark-700" onclick="currentModule.changeLanguage('en')">
+                        <i class="ti ti-check mr-2 text-green-500" id="en-check"></i>English
+                    </a>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-dark-700" onclick="currentModule.changeLanguage('vi')">
+                        <i class="ti ti-check mr-2 text-green-500 hidden" id="vi-check"></i>Tiếng Việt
+                    </a>
+                </div>
+            </div>
+            
+            <button id="nav-user" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                <i class="ti ti-user mr-2"></i><span data-i18n="user">User</span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Sidebar Overlay -->
+<div id="sidebar-overlay" class="sidebar-overlay"></div> 

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧾 OCX Online Ticket System - Dashboard</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tabler Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/styles/main.css">
+    
+    <!-- Chart.js first -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-dark-950 text-white min-h-screen overflow-x-hidden">
+    <div id="app">
+        <!-- Loading -->
+        <div id="loading" class="fixed inset-0 bg-dark-950 flex items-center justify-center z-50">
+            <div class="text-center">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+                <p class="mt-4 text-gray-400" data-i18n="loading">Loading...</p>
+            </div>
+        </div>
+
+        <!-- Layout Container -->
+        <div id="layout-container" class="min-h-screen bg-dark-950 overflow-x-hidden">
+            <!-- Sidebar Component Placeholder -->
+            <div id="sidebar-container"></div>
+            
+            <!-- Main Content -->
+            <div id="main-content" class="min-h-screen flex flex-col transition-all duration-300 ease-in-out">
+                <!-- Header Component Placeholder -->
+                <div id="header-container"></div>
+
+                <!-- Main Content -->
+                <main class="flex-1 p-6 overflow-y-auto overflow-x-hidden">
+                    <div class="space-y-6">
+                        <!-- Stats Cards -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <div class="bg-dark-900 rounded-lg shadow-xl p-6">
+                                <div class="flex items-center">
+                                    <div class="p-3 rounded-full bg-blue-500 bg-opacity-20">
+                                        <i class="ti ti-users text-2xl text-blue-500"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <p class="text-sm font-medium text-gray-400" data-i18n="total_users">Total Users</p>
+                                        <p class="text-2xl font-bold text-white" id="total-users">0</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-dark-900 rounded-lg shadow-xl p-6">
+                                <div class="flex items-center">
+                                    <div class="p-3 rounded-full bg-green-500 bg-opacity-20">
+                                        <i class="ti ti-calendar text-2xl text-green-500"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <p class="text-sm font-medium text-gray-400" data-i18n="total_events">Total Events</p>
+                                        <p class="text-2xl font-bold text-white" id="total-events">0</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-dark-900 rounded-lg shadow-xl p-6">
+                                <div class="flex items-center">
+                                    <div class="p-3 rounded-full bg-purple-500 bg-opacity-20">
+                                        <i class="ti ti-ticket text-2xl text-purple-500"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <p class="text-sm font-medium text-gray-400" data-i18n="total_tickets">Total Tickets</p>
+                                        <p class="text-2xl font-bold text-white" id="total-tickets">0</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-dark-900 rounded-lg shadow-xl p-6">
+                                <div class="flex items-center">
+                                    <div class="p-3 rounded-full bg-yellow-500 bg-opacity-20">
+                                        <i class="ti ti-currency-dollar text-2xl text-yellow-500"></i>
+                                    </div>
+                                    <div class="ml-4 flex-1">
+                                        <p class="text-sm font-medium text-gray-400" data-i18n="total_revenue">Total Revenue</p>
+                                        <p class="text-2xl font-bold text-white" id="total-revenue">0đ</p>
+                                    </div>
+                                    <button id="refresh-revenue" class="p-2 text-gray-400 hover:text-yellow-500 transition-colors" title="Refresh Revenue">
+                                        <i class="ti ti-refresh text-lg"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Charts Section -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="bg-dark-900 rounded-lg shadow-xl p-6">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="text-lg font-semibold" data-i18n="revenue_by_month">Revenue by Month</h3>
+                                    <div class="flex items-center space-x-2">
+                                        <select id="revenue-period" class="bg-dark-800 text-gray-400 rounded px-2 py-1 text-sm focus:outline-none hover:text-white transition-colors">
+                                            <option value="week" data-i18n="period_week">Week</option>
+                                            <option value="month" data-i18n="period_month" selected>Month</option>
+                                            <option value="year" data-i18n="period_year">Year</option>
+                                        </select>
+                                        <button id="refresh-chart" class="p-1 text-gray-400 hover:text-blue-500 transition-colors">
+                                            <i class="ti ti-refresh text-lg"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="h-64">
+                                    <canvas id="revenueChart"></canvas>
+                                </div>
+                            </div>
+                            
+                            <!-- Keep the existing upcoming events section -->
+                            <div class="bg-dark-900 rounded-lg shadow-xl p-6">
+                                <h3 class="text-lg font-semibold mb-4" data-i18n="upcoming_events">Upcoming Events</h3>
+                                <div class="space-y-4" id="upcoming-events">
+                                    <div class="flex items-center p-3 bg-dark-800 rounded-lg">
+                                        <div class="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                                        <div class="flex-1">
+                                            <p class="font-medium" data-i18n="no_events">No events available</p>
+                                            <p class="text-sm text-gray-400" data-i18n="will_display_when_data">Will display when data is available</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Recent Activity -->
+                        <div class="bg-dark-900 rounded-lg shadow-xl p-6">
+                            <h3 class="text-lg font-semibold mb-4" data-i18n="recent_activity">Recent Activity</h3>
+                            <div class="space-y-4" id="recent-activity">
+                                <div class="flex items-center p-3 bg-dark-800 rounded-lg">
+                                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3">
+                                        <i class="ti ti-user text-white text-sm"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-medium" data-i18n="system_ready">System Ready</p>
+                                        <p class="text-sm text-gray-400" data-i18n="welcome_message">Welcome to OCX Ticket System</p>
+                                    </div>
+                                    <span class="text-xs text-gray-500" data-i18n="just_now">Just now</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <!-- Alert Component Placeholder -->
+        <div id="alert-container"></div>
+    </div>
+
+    <!-- Load modules in correct order -->
+    <script src="/js/i18n.js" type="module"></script>
+    <script src="/js/modules/component-loader.js" type="module"></script>
+    <script src="/js/modules/dashboard.js" type="module"></script>
+</body>
+</html> 
