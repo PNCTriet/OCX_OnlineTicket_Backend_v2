@@ -9,17 +9,22 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   
   // Enable CORS
-  app.enableCors({
-    origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
-    credentials: true,
+  app.enableCors();
+  
+  // Serve static files from public directory
+  const publicPath = process.env.NODE_ENV === 'production' 
+    ? join(__dirname, '..', 'public')
+    : join(__dirname, '..', '..', 'public');
+  
+  app.useStaticAssets(publicPath, {
+    prefix: '/',
+  });
+
+  // Set global prefix for API routes only
+  app.setGlobalPrefix('api', {
+    exclude: ['/'],
   });
   
-  // Serve static files BEFORE setting global prefix
-  app.useStaticAssets(join(__dirname, '..', 'public'), {
-    index: 'index.html'
-  });
-  
-  app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
   const config = new DocumentBuilder()

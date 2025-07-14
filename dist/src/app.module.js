@@ -16,7 +16,14 @@ const prisma_module_1 = require("./common/prisma/prisma.module");
 const supabase_module_1 = require("./common/supabase/supabase.module");
 const auth_module_1 = require("./auth/auth.module");
 const users_module_1 = require("./users/users.module");
+const events_module_1 = require("./events/events.module");
+const tickets_module_1 = require("./tickets/tickets.module");
+const payments_module_1 = require("./payments/payments.module");
+const organizations_module_1 = require("./organizations/organizations.module");
+const orders_module_1 = require("./orders/orders.module");
+const webhooks_module_1 = require("./webhooks/webhooks.module");
 const i18n_module_1 = require("./common/i18n/i18n.module");
+const app_controller_1 = require("./app.controller");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -32,7 +39,14 @@ exports.AppModule = AppModule = __decorate([
             i18n_module_1.I18nConfigModule,
             auth_module_1.AuthModule,
             users_module_1.UsersModule,
+            events_module_1.EventsModule,
+            tickets_module_1.TicketsModule,
+            payments_module_1.PaymentsModule,
+            organizations_module_1.OrganizationsModule,
+            orders_module_1.OrdersModule,
+            webhooks_module_1.WebhooksModule,
         ],
+        controllers: [app_controller_1.AppController],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

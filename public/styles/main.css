@@ -1,0 +1,315 @@
+/* Custom CSS for OCX Frontend */
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #475569;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Animation classes */
+.fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+.slide-in {
+    animation: slideIn 0.3s ease-out;
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+/* Form styling */
+.form-input:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Button hover effects */
+.btn-primary {
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Alert animations */
+.alert-show {
+    animation: slideIn 0.3s ease-out;
+}
+
+.alert-hide {
+    animation: fadeIn 0.3s ease-out reverse;
+}
+
+/* Loading spinner */
+.spinner {
+    border: 2px solid #1e293b;
+    border-top: 2px solid #3b82f6;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Table styling */
+.table-row:hover {
+    background-color: #1e293b;
+    transition: background-color 0.2s ease;
+}
+
+/* Status badges */
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.status-active {
+    background-color: #10b981;
+    color: white;
+}
+
+.status-inactive {
+    background-color: #6b7280;
+    color: white;
+}
+
+.status-pending {
+    background-color: #f59e0b;
+    color: white;
+}
+
+/* Responsive utilities */
+@media (max-width: 640px) {
+    .mobile-hidden {
+        display: none;
+    }
+    
+    .mobile-full {
+        width: 100%;
+    }
+}
+
+/* Sidebar styles */
+#sidebar {
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+}
+
+#sidebar-content {
+    scrollbar-width: thin;
+    scrollbar-color: #475569 #1e293b;
+}
+
+#sidebar-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+#sidebar-content::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+#sidebar-content::-webkit-scrollbar-thumb {
+    background: #475569;
+    border-radius: 3px;
+}
+
+#sidebar-content::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
+/* Layout transitions */
+#main-content {
+    transition: margin-left 0.3s ease-in-out;
+}
+
+/* Mobile overlay for sidebar */
+@media (max-width: 640px) {
+    #sidebar {
+        z-index: 50;
+    }
+    
+    #sidebar.show {
+        transform: translateX(0);
+    }
+    
+    /* Add overlay when sidebar is open */
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 40;
+    }
+}
+
+/* Focus styles for accessibility */
+button:focus,
+input:focus,
+select:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* Custom transitions */
+.transition-all {
+    transition: all 0.2s ease;
+}
+
+.transition-colors {
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.transition-transform {
+    transition: transform 0.2s ease;
+}
+
+/* Sidebar responsive behavior - Desktop First Approach */
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 280px;
+    z-index: 50;
+    transition: transform 0.3s ease-in-out;
+    background-color: #0f172a;
+    border-right: 1px solid #1e293b;
+}
+
+/* Desktop sidebar - ALWAYS VISIBLE by default */
+#sidebar {
+    transform: translateX(0);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+}
+
+#main-content {
+    margin-left: 280px;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+/* Hide hamburger on desktop */
+.mobile-menu-btn {
+    display: none;
+}
+
+/* Hide overlay on desktop */
+.sidebar-overlay {
+    display: none;
+}
+
+/* Mobile responsive - only apply mobile styles on small screens */
+@media (max-width: 768px) {
+    #sidebar {
+        transform: translateX(-100%);
+        box-shadow: 4px 0 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    #sidebar.mobile-open {
+        transform: translateX(0);
+    }
+    
+    #main-content {
+        margin-left: 0;
+    }
+    
+    /* Show hamburger on mobile */
+    .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background-color: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        color: #3b82f6;
+        transition: all 0.2s ease-in-out;
+    }
+    
+    .mobile-menu-btn:hover {
+        background-color: rgba(59, 130, 246, 0.2);
+        border-color: rgba(59, 130, 246, 0.3);
+    }
+    
+    .mobile-menu-btn:active {
+        transform: scale(0.95);
+    }
+    
+    /* Mobile overlay */
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 40;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        display: block;
+    }
+    
+    .sidebar-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+}

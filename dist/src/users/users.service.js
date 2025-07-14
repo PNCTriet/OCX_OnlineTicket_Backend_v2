@@ -70,6 +70,12 @@ let UsersService = class UsersService {
             where: { id },
         });
     }
+    async getCount(currentUser) {
+        if (currentUser.role !== client_1.UserRole.ADMIN && currentUser.role !== client_1.UserRole.SUPERADMIN) {
+            throw new common_1.ForbiddenException('Không có quyền xem số lượng người dùng');
+        }
+        return this.prisma.user.count();
+    }
 };
 exports.UsersService = UsersService;
 exports.UsersService = UsersService = __decorate([

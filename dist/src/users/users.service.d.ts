@@ -8,4 +8,5 @@ export declare class UsersService {
     update(id: string, updateUserDto: UpdateUserDto, currentUser: any): Promise<UserResponseDto>;
     findAll(currentUser: any): Promise<UserResponseDto[]>;
     delete(id: string, currentUser: any): Promise<void>;
+    getCount(currentUser: any): Promise<number>;
 }

@@ -4,7 +4,7 @@
   "description": "> **Giao diện dành cho Cursor:** Dark Mode ✅  | Icon: Tabler ✅",
   "main": "index.js",
   "scripts": {
-    "build": "nest build",
+    "build": "nest build && cp -r public dist/",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -19,7 +19,8 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
-    "prisma:seed": "ts-node prisma/seed.ts"
+    "prisma:seed": "ts-node prisma/seed.ts",
+    "db:seed": "node scripts/seed-database.js"
   },
   "keywords": [],
   "author": "",

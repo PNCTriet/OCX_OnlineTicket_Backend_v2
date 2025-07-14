@@ -79,4 +79,13 @@ export class UsersService {
       where: { id },
     });
   }
+
+  async getCount(currentUser: any): Promise<number> {
+    // Chỉ admin mới có thể xem số lượng người dùng
+    if (currentUser.role !== UserRole.ADMIN && currentUser.role !== UserRole.SUPERADMIN) {
+      throw new ForbiddenException('Không có quyền xem số lượng người dùng');
+    }
+
+    return this.prisma.user.count();
+  }
 } 

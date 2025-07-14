@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧾 OCX Online Ticket System - Register</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tabler Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/styles/main.css">
+    
+    <!-- i18n Script -->
+    <script src="/js/i18n.js"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-dark-950 text-white min-h-screen overflow-x-hidden">
+    <div id="app">
+        <!-- Loading -->
+        <div id="loading" class="fixed inset-0 bg-dark-950 flex items-center justify-center z-50">
+            <div class="text-center">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+                <p class="mt-4 text-gray-400" data-i18n="loading">Loading...</p>
+            </div>
+        </div>
+
+        <!-- Register Container -->
+        <div class="min-h-screen flex items-center justify-center p-4">
+            <div class="max-w-md w-full">
+                <div class="bg-dark-900 rounded-lg shadow-xl p-8">
+                    <div class="text-center mb-8">
+                        <i class="ti ti-user-plus text-4xl text-green-500 mb-4"></i>
+                        <h1 class="text-2xl font-bold mb-2" data-i18n="register_title">Register</h1>
+                        <p class="text-gray-400" data-i18n="register_subtitle">Create new account</p>
+                    </div>
+                    
+                    <form id="registerForm" class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2" data-i18n="name">Name</label>
+                            <input type="text" id="register-name" required 
+                                   class="w-full px-4 py-3 bg-dark-800 border border-dark-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-400"
+                                   placeholder="Enter your full name">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2" data-i18n="email">Email</label>
+                            <input type="email" id="register-email" required 
+                                   class="w-full px-4 py-3 bg-dark-800 border border-dark-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-400"
+                                   placeholder="Enter your email">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2" data-i18n="phone">Phone</label>
+                            <input type="tel" id="register-phone" 
+                                   class="w-full px-4 py-3 bg-dark-800 border border-dark-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-400"
+                                   placeholder="Enter your phone number">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2" data-i18n="password">Password</label>
+                            <input type="password" id="register-password" required 
+                                   class="w-full px-4 py-3 bg-dark-800 border border-dark-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-400"
+                                   placeholder="Enter your password">
+                        </div>
+                        
+                        <button type="submit" 
+                                class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center">
+                            <i class="ti ti-user-plus mr-2"></i><span data-i18n="register">Register</span>
+                        </button>
+                    </form>
+                    
+                    <div class="mt-6 text-center">
+                        <a href="/pages/login.html" class="text-blue-400 hover:text-blue-300 text-sm" data-i18n="have_account_login">
+                            Already have an account? Login
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alert Component -->
+        <div id="alert" class="fixed top-4 right-4 z-50 hidden">
+            <div class="bg-dark-900 border border-dark-700 rounded-lg shadow-xl p-4 max-w-sm">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0">
+                        <i id="alert-icon" class="text-xl"></i>
+                    </div>
+                    <div class="ml-3">
+                        <h3 id="alert-title" class="text-sm font-medium"></h3>
+                        <p id="alert-message" class="text-sm text-gray-400 mt-1"></p>
+                    </div>
+                    <div class="ml-auto pl-3">
+                        <button id="alert-close" class="text-gray-400 hover:text-gray-300">
+                            <i class="ti ti-x"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Module Script -->
+    <script src="/js/modules/auth.js"></script>
+</body>
+</html> 

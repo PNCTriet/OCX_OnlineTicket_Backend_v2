@@ -7,14 +7,16 @@ const common_1 = require("@nestjs/common");
 const path_1 = require("path");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
-    app.enableCors({
-        origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
-        credentials: true,
+    app.enableCors();
+    const publicPath = process.env.NODE_ENV === 'production'
+        ? (0, path_1.join)(__dirname, '..', 'public')
+        : (0, path_1.join)(__dirname, '..', '..', 'public');
+    app.useStaticAssets(publicPath, {
+        prefix: '/',
     });
-    app.useStaticAssets((0, path_1.join)(__dirname, '..', 'public'), {
-        index: 'index.html'
+    app.setGlobalPrefix('api', {
+        exclude: ['/'],
     });
-    app.setGlobalPrefix('api');
     app.useGlobalPipes(new common_1.ValidationPipe({ whitelist: true, transform: true }));
     const config = new swagger_1.DocumentBuilder()
         .setTitle('🧾 OCX Online Ticket API')

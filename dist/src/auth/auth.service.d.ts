@@ -30,15 +30,15 @@ export declare class AuthService {
         };
     }>;
     validateUser(userId: string, lang?: string): Promise<{
+        id: string;
+        created_at: Date;
+        updated_at: Date;
         email: string;
         name: string | null;
-        phone: string | null;
-        id: string;
         role: import(".prisma/client").$Enums.UserRole;
         is_verified: boolean;
         supabase_id: string | null;
+        phone: string | null;
         avatar_url: string | null;
-        created_at: Date;
-        updated_at: Date;
     }>;
 }

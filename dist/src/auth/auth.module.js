@@ -10,8 +10,10 @@ exports.AuthModule = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
 const config_1 = require("@nestjs/config");
+const passport_1 = require("@nestjs/passport");
 const auth_controller_1 = require("./auth.controller");
 const auth_service_1 = require("./auth.service");
+const jwt_strategy_1 = require("./strategies/jwt.strategy");
 const prisma_module_1 = require("../common/prisma/prisma.module");
 const supabase_module_1 = require("../common/supabase/supabase.module");
 const i18n_module_1 = require("../common/i18n/i18n.module");
@@ -21,6 +23,7 @@ exports.AuthModule = AuthModule;
 exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            passport_1.PassportModule,
             prisma_module_1.PrismaModule,
             supabase_module_1.SupabaseModule,
             i18n_module_1.I18nConfigModule,
@@ -36,7 +39,7 @@ exports.AuthModule = AuthModule = __decorate([
             }),
         ],
         controllers: [auth_controller_1.AuthController],
-        providers: [auth_service_1.AuthService],
+        providers: [auth_service_1.AuthService, jwt_strategy_1.JwtStrategy],
         exports: [auth_service_1.AuthService],
     })
 ], AuthModule);

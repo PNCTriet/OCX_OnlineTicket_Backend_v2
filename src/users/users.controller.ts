@@ -34,6 +34,18 @@ export class UsersController {
     return this.usersService.findAll(req.user);
   }
 
+  @Get('count')
+  @ApiOperation({ summary: 'Lấy số lượng người dùng (Admin only)' })
+  @ApiResponse({ 
+    status: 200, 
+    description: 'Số lượng người dùng',
+    type: Number 
+  })
+  @ApiResponse({ status: 403, description: 'Không có quyền truy cập' })
+  async getCount(@Request() req): Promise<number> {
+    return this.usersService.getCount(req.user);
+  }
+
   @Get(':id')
   @ApiOperation({ summary: 'Lấy thông tin người dùng theo ID' })
   @ApiResponse({ 

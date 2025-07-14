@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Supabase Connection</title>
+</head>
+<body>
+    <h1>Test Supabase Connection</h1>
+    <div id="result"></div>
+
+    <script type="module">
+        import supabaseClient from './js/modules/supabase-client.js';
+        
+        async function testConnection() {
+            try {
+                console.log('Testing Supabase connection...');
+                
+                // Test getting users
+                const users = await supabaseClient.getUsers();
+                console.log('Users:', users);
+                
+                document.getElementById('result').innerHTML = `
+                    <h2>✅ Connection Successful!</h2>
+                    <p>Found ${users.length} users</p>
+                    <pre>${JSON.stringify(users, null, 2)}</pre>
+                `;
+                
+            } catch (error) {
+                console.error('Connection failed:', error);
+                document.getElementById('result').innerHTML = `
+                    <h2>❌ Connection Failed!</h2>
+                    <p>Error: ${error.message}</p>
+                `;
+            }
+        }
+        
+        testConnection();
+    </script>
+</body>
+</html> 

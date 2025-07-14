@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧾 OCX Online Ticket System - Users Management</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tabler Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/styles/main.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-dark-950 text-white min-h-screen overflow-x-hidden">
+    <div id="app">
+        <!-- Loading -->
+        <div id="loading" class="fixed inset-0 bg-dark-950 flex items-center justify-center z-50">
+            <div class="text-center">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+                <p class="mt-4 text-gray-400" data-i18n="loading">Loading...</p>
+            </div>
+        </div>
+
+        <!-- Layout Container -->
+        <div id="layout-container" class="min-h-screen bg-dark-950 overflow-x-hidden">
+            <!-- Sidebar Component Placeholder -->
+            <div id="sidebar-container"></div>
+            
+            <!-- Main Content -->
+            <div id="main-content" class="min-h-screen flex flex-col transition-all duration-300 ease-in-out">
+                <!-- Header Component Placeholder -->
+                <div id="header-container"></div>
+
+                <!-- Main Content -->
+                <main class="flex-1 p-6 overflow-y-auto overflow-x-hidden">
+                    <div class="bg-dark-900 rounded-lg shadow-xl p-8">
+                        <!-- Header Section -->
+                        <div class="flex items-center justify-between mb-8">
+                            <div>
+                                <h2 class="text-2xl font-bold" data-i18n="users_management">Users Management</h2>
+                                <p class="text-gray-400 mt-2" data-i18n="manage_users_subtitle">Manage system users and their roles</p>
+                            </div>
+                            <div class="flex gap-4">
+                                <button id="refresh-users" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
+                                    <i class="ti ti-refresh mr-2"></i><span data-i18n="refresh">Refresh</span>
+                                </button>
+                                <button id="add-user" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center">
+                                    <i class="ti ti-plus mr-2"></i><span data-i18n="add_user">Add User</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Search and Filter Section -->
+                        <div class="mb-6 flex flex-wrap gap-4">
+                            <div class="flex-1 min-w-[200px]">
+                                <input type="text" id="search-users" 
+                                    class="w-full bg-dark-800 border border-dark-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                                    placeholder="Search users...">
+                            </div>
+                            <select id="filter-role" class="bg-dark-800 border border-dark-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500">
+                                <option value="">All Roles</option>
+                                <option value="SUPERADMIN">Super Admin</option>
+                                <option value="ADMIN">Admin</option>
+                                <option value="USER">User</option>
+                                <option value="OWNER_ORGANIZER">Owner Organizer</option>
+                            </select>
+                            <select id="filter-status" class="bg-dark-800 border border-dark-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500">
+                                <option value="">All Status</option>
+                                <option value="true">Verified</option>
+                                <option value="false">Unverified</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Users Table -->
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm text-left">
+                                <thead class="text-xs uppercase bg-dark-800">
+                                    <tr>
+                                        <th class="px-6 py-3" data-i18n="name">Name</th>
+                                        <th class="px-6 py-3" data-i18n="email">Email</th>
+                                        <th class="px-6 py-3" data-i18n="role">Role</th>
+                                        <th class="px-6 py-3" data-i18n="status">Status</th>
+                                        <th class="px-6 py-3" data-i18n="created_at">Created At</th>
+                                        <th class="px-6 py-3" data-i18n="actions">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="users-list">
+                                    <!-- Users will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="mt-6 flex items-center justify-between">
+                            <div class="text-sm text-gray-400">
+                                <span id="total-users-count">0</span> users found
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button id="prev-page" class="px-3 py-1 bg-dark-800 rounded-lg hover:bg-dark-700 disabled:opacity-50">
+                                    <i class="ti ti-chevron-left"></i>
+                                </button>
+                                <span id="current-page" class="px-3 py-1">1</span>
+                                <button id="next-page" class="px-3 py-1 bg-dark-800 rounded-lg hover:bg-dark-700 disabled:opacity-50">
+                                    <i class="ti ti-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <!-- User Modal -->
+        <div id="user-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+            <div class="bg-dark-900 rounded-lg shadow-xl p-8 max-w-2xl w-full mx-4">
+                <h3 class="text-xl font-bold mb-6" id="modal-title">Add User</h3>
+                <form id="user-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2" for="user-name">Name</label>
+                        <input type="text" id="user-name" name="name" required
+                            class="w-full bg-dark-800 border border-dark-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2" for="user-email">Email</label>
+                        <input type="email" id="user-email" name="email" required
+                            class="w-full bg-dark-800 border border-dark-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2" for="user-role">Role</label>
+                        <select id="user-role" name="role" required
+                            class="w-full bg-dark-800 border border-dark-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500">
+                            <option value="USER">User</option>
+                            <option value="ADMIN">Admin</option>
+                            <option value="ORGANIZER">Organizer</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2" for="user-status">Status</label>
+                        <select id="user-status" name="status" required
+                            class="w-full bg-dark-800 border border-dark-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500">
+                            <option value="ACTIVE">Active</option>
+                            <option value="INACTIVE">Inactive</option>
+                            <option value="PENDING">Pending</option>
+                        </select>
+                    </div>
+                    <div class="flex justify-end gap-4 mt-8">
+                        <button type="button" id="close-modal"
+                            class="px-4 py-2 bg-dark-800 text-white rounded-lg hover:bg-dark-700">
+                            Cancel
+                        </button>
+                        <button type="submit"
+                            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Alert Component Placeholder -->
+        <div id="alert-container"></div>
+    </div>
+
+    <!-- Load modules in correct order -->
+    <script src="/js/i18n.js" type="module"></script>
+    <script src="/js/modules/component-loader.js" type="module"></script>
+    <script src="/js/modules/admin.js" type="module"></script>
+    <script src="/js/modules/admin_manage_users.js" type="module"></script>
+</body>
+</html> 

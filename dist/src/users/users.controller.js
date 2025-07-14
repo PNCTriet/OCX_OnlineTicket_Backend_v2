@@ -28,6 +28,9 @@ let UsersController = class UsersController {
     async findAll(req) {
         return this.usersService.findAll(req.user);
     }
+    async getCount(req) {
+        return this.usersService.getCount(req.user);
+    }
     async findById(id) {
         return this.usersService.findById(id);
     }
@@ -66,6 +69,20 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)('count'),
+    (0, swagger_1.ApiOperation)({ summary: 'Lấy số lượng người dùng (Admin only)' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Số lượng người dùng',
+        type: Number
+    }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Không có quyền truy cập' }),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "getCount", null);
 __decorate([
     (0, common_1.Get)(':id'),
     (0, swagger_1.ApiOperation)({ summary: 'Lấy thông tin người dùng theo ID' }),

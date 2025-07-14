@@ -1,0 +1,66 @@
+<!-- Sidebar Component -->
+<div id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-dark-900 border-r border-dark-800 transform -translate-x-full transition-transform duration-300 ease-in-out z-40">
+    <div id="sidebar-content" class="h-full overflow-y-auto">
+        <div class="p-4">
+            <div class="flex items-center mb-6">
+                <i class="ti ti-ticket text-2xl text-blue-500 mr-3"></i>
+                <span class="text-xl font-bold">OCX Tickets</span>
+            </div>
+            
+            <!-- Navigation Menu -->
+            <nav class="space-y-2">
+                <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3" data-i18n="dashboard">Dashboard</div>
+                <button id="nav-dashboard" class="w-full flex items-center px-3 py-2 text-gray-300 hover:text-white hover:bg-dark-800 rounded-lg transition-colors">
+                    <i class="ti ti-chart-dots mr-3 flex-shrink-0"></i>
+                    <span class="truncate text-sm" data-i18n="dashboard">Dashboard</span>
+                </button>
+                
+                <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 mt-6" data-i18n="management">Management</div>
+                <button id="nav-users" class="w-full flex items-center px-3 py-2 text-gray-300 hover:text-white hover:bg-dark-800 rounded-lg transition-colors">
+                    <i class="ti ti-users mr-3 flex-shrink-0"></i>
+                    <span class="truncate text-sm" data-i18n="users_management">Users Management</span>
+                </button>
+                <button id="nav-organizations" class="w-full flex items-center px-3 py-2 text-gray-300 hover:text-white hover:bg-dark-800 rounded-lg transition-colors">
+                    <i class="ti ti-building mr-3 flex-shrink-0"></i>
+                    <span class="truncate text-sm" data-i18n="organizations_management">Organizations Management</span>
+                </button>
+                <button id="nav-events" class="w-full flex items-center px-3 py-2 text-gray-300 hover:text-white hover:bg-dark-800 rounded-lg transition-colors">
+                    <i class="ti ti-calendar mr-3 flex-shrink-0"></i>
+                    <span class="truncate text-sm" data-i18n="events_management">Events Management</span>
+                </button>
+                <button id="nav-tickets" class="w-full flex items-center px-3 py-2 text-gray-300 hover:text-white hover:bg-dark-800 rounded-lg transition-colors">
+                    <i class="ti ti-ticket mr-3 flex-shrink-0"></i>
+                    <span class="truncate text-sm" data-i18n="tickets_management">Tickets Management</span>
+                </button>
+                <button id="nav-orders" class="w-full flex items-center px-3 py-2 text-gray-300 hover:text-white hover:bg-dark-800 rounded-lg transition-colors">
+                    <i class="ti ti-shopping-cart mr-3 flex-shrink-0"></i>
+                    <span class="truncate text-sm" data-i18n="orders_management">Orders Management</span>
+                </button>
+                <button id="nav-payments" class="w-full flex items-center px-3 py-2 text-gray-300 hover:text-white hover:bg-dark-800 rounded-lg transition-colors">
+                    <i class="ti ti-credit-card mr-3 flex-shrink-0"></i>
+                    <span class="truncate text-sm" data-i18n="payments_management">Payments Management</span>
+                </button>
+                
+                <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 mt-6" data-i18n="system">System</div>
+                <button id="nav-sync" class="w-full flex items-center px-3 py-2 text-gray-300 hover:text-white hover:bg-dark-800 rounded-lg transition-colors">
+                    <i class="ti ti-refresh mr-3 flex-shrink-0"></i>
+                    <span class="truncate text-sm" data-i18n="sync_data">Sync Data</span>
+                </button>
+                <button id="nav-logs" class="w-full flex items-center px-3 py-2 text-gray-300 hover:text-white hover:bg-dark-800 rounded-lg transition-colors">
+                    <i class="ti ti-file-text mr-3 flex-shrink-0"></i>
+                    <span class="truncate text-sm" data-i18n="system_logs">System Logs</span>
+                </button>
+                
+                <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 mt-6" data-i18n="documentation">Documentation</div>
+                <button id="nav-api-docs" class="w-full flex items-center px-3 py-2 text-gray-300 hover:text-white hover:bg-dark-800 rounded-lg transition-colors">
+                    <i class="ti ti-book mr-3 flex-shrink-0"></i>
+                    <span class="truncate text-sm" data-i18n="api_documentation">API Documentation</span>
+                </button>
+                <button id="nav-business-docs" class="w-full flex items-center px-3 py-2 text-gray-300 hover:text-white hover:bg-dark-800 rounded-lg transition-colors">
+                    <i class="ti ti-file-description mr-3 flex-shrink-0"></i>
+                    <span class="truncate text-sm" data-i18n="business_guide">Business Guide</span>
+                </button>
+            </nav>
+        </div>
+    </div>
+</div> 
