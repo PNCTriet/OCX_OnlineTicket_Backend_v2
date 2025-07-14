@@ -1,15 +1,19 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/+esm'
+import { SUPABASE_CONFIG } from '../config.js'
 
 class SupabaseClient {
     constructor() {
         // Initialize Supabase client
         this.supabase = createClient(
-            'YOUR_SUPABASE_URL',
-            'YOUR_SUPABASE_ANON_KEY'
+            SUPABASE_CONFIG.url,
+            SUPABASE_CONFIG.anonKey
         );
+        
+        // Log để debug
+        console.log('Supabase initialized with URL:', SUPABASE_CONFIG.url);
     }
 
-    // Users
+    // Users CRUD operations
     async getUsers() {
         try {
             const { data, error } = await this.supabase
@@ -17,7 +21,11 @@ class SupabaseClient {
                 .select('*')
                 .order('created_at', { ascending: false });
 
-            if (error) throw error;
+            if (error) {
+                console.error('Supabase error:', error);
+                throw error;
+            }
+            console.log('Users data:', data); // Log để debug
             return data;
         } catch (error) {
             console.error('Error fetching users:', error);
@@ -25,103 +33,52 @@ class SupabaseClient {
         }
     }
 
-    // Organizations
-    async getOrganizations() {
+    async createUser(userData) {
         try {
             const { data, error } = await this.supabase
-                .from('organizations')
-                .select('*')
-                .order('created_at', { ascending: false });
+                .from('users')
+                .insert([userData])
+                .select();
 
             if (error) throw error;
-            return data;
+            return data[0];
         } catch (error) {
-            console.error('Error fetching organizations:', error);
+            console.error('Error creating user:', error);
             throw error;
         }
     }
 
-    // Events
-    async getEvents() {
+    async updateUser(userId, userData) {
         try {
             const { data, error } = await this.supabase
-                .from('events')
-                .select(`
-                    *,
-                    organization:organizations(name)
-                `)
-                .order('start_date', { ascending: true });
+                .from('users')
+                .update(userData)
+                .eq('id', userId)
+                .select();
 
             if (error) throw error;
-            return data;
+            return data[0];
         } catch (error) {
-            console.error('Error fetching events:', error);
+            console.error('Error updating user:', error);
             throw error;
         }
     }
 
-    // Tickets
-    async getTickets() {
+    async deleteUser(userId) {
         try {
-            const { data, error } = await this.supabase
-                .from('tickets')
-                .select(`
-                    *,
-                    event:events(name),
-                    organization:organizations(name)
-                `)
-                .order('created_at', { ascending: false });
+            const { error } = await this.supabase
+                .from('users')
+                .delete()
+                .eq('id', userId);
 
             if (error) throw error;
-            return data;
+            return true;
         } catch (error) {
-            console.error('Error fetching tickets:', error);
+            console.error('Error deleting user:', error);
             throw error;
         }
     }
 
-    // Orders
-    async getOrders() {
-        try {
-            const { data, error } = await this.supabase
-                .from('orders')
-                .select(`
-                    *,
-                    user:users(name, email),
-                    ticket:tickets(name, price),
-                    event:events(name)
-                `)
-                .order('created_at', { ascending: false });
-
-            if (error) throw error;
-            return data;
-        } catch (error) {
-            console.error('Error fetching orders:', error);
-            throw error;
-        }
-    }
-
-    // Payments
-    async getPayments() {
-        try {
-            const { data, error } = await this.supabase
-                .from('payments')
-                .select(`
-                    *,
-                    order:orders(total_amount, status),
-                    user:users(name, email)
-                `)
-                .order('created_at', { ascending: false });
-
-            if (error) throw error;
-            return data;
-        } catch (error) {
-            console.error('Error fetching payments:', error);
-            throw error;
-        }
-    }
-
-    // Auth methods
     async getCurrentUser() {
         try {
             const { data: { user }, error } = await this.supabase.auth.getUser();
@@ -133,24 +90,11 @@ class SupabaseClient {
         }
     }
 
-    async signIn(email, password) {
-        try {
-            const { data, error } = await this.supabase.auth.signInWithPassword({
-                email,
-                password
-            });
-            if (error) throw error;
-            return data;
-        } catch (error) {
-            console.error('Error signing in:', error);
-            throw error;
-        }
-    }
-
     async signOut() {
         try {
             const { error } = await this.supabase.auth.signOut();
             if (error) throw error;
+            console.log('User signed out successfully');
         } catch (error) {
             console.error('Error signing out:', error);
             throw error;

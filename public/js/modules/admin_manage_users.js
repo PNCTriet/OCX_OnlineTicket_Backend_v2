@@ -150,6 +150,7 @@ class UsersManagementModule {
             
             // Get users from Supabase
             let users = await supabaseClient.getUsers();
+            console.log('Loaded users:', users); // Debug log
             
             // Apply filters
             if (this.filters.search) {
@@ -165,7 +166,8 @@ class UsersManagementModule {
             }
             
             if (this.filters.status) {
-                users = users.filter(user => user.status === this.filters.status);
+                const isVerified = this.filters.status === 'true';
+                users = users.filter(user => user.is_verified === isVerified);
             }
 
             // Update total count
@@ -225,8 +227,8 @@ class UsersManagementModule {
                     </span>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="px-2 py-1 text-xs font-medium rounded-full ${this.getStatusClass(user.status)}">
-                        ${user.status}
+                    <span class="px-2 py-1 text-xs font-medium rounded-full ${this.getStatusClass(user.is_verified)}">
+                        ${user.is_verified ? 'VERIFIED' : 'UNVERIFIED'}
                     </span>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
@@ -248,20 +250,18 @@ class UsersManagementModule {
 
     getRoleClass(role) {
         const classes = {
-            'ADMIN': 'bg-purple-500 bg-opacity-20 text-purple-500',
-            'USER': 'bg-blue-500 bg-opacity-20 text-blue-500',
-            'ORGANIZER': 'bg-green-500 bg-opacity-20 text-green-500'
+            'SUPERADMIN': 'bg-purple-500 bg-opacity-20 text-purple-500',
+            'ADMIN': 'bg-blue-500 bg-opacity-20 text-blue-500',
+            'USER': 'bg-green-500 bg-opacity-20 text-green-500',
+            'OWNER_ORGANIZER': 'bg-orange-500 bg-opacity-20 text-orange-500'
         };
         return classes[role] || 'bg-gray-500 bg-opacity-20 text-gray-500';
     }
 
-    getStatusClass(status) {
-        const classes = {
-            'ACTIVE': 'bg-green-500 bg-opacity-20 text-green-500',
-            'INACTIVE': 'bg-red-500 bg-opacity-20 text-red-500',
-            'PENDING': 'bg-yellow-500 bg-opacity-20 text-yellow-500'
-        };
-        return classes[status] || 'bg-gray-500 bg-opacity-20 text-gray-500';
+    getStatusClass(isVerified) {
+        return isVerified 
+            ? 'bg-green-500 bg-opacity-20 text-green-500'
+            : 'bg-yellow-500 bg-opacity-20 text-yellow-500';
     }
 
     showUserModal(userId = null) {

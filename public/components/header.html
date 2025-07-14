@@ -1,37 +1,86 @@
 <!-- Header Component -->
-<nav class="bg-dark-900 border-b border-dark-800 px-4 py-3">
-    <div class="flex justify-between items-center">
-        <div class="flex items-center space-x-3">
-            <!-- Mobile Menu Button -->
-            <button id="mobile-menu-btn" class="mobile-menu-btn md:hidden">
-                <i class="ti ti-menu text-lg"></i>
-            </button>
-            
-                                        <h1 id="page-title" class="text-lg font-semibold" data-i18n="page_title">Page Title</h1>
-        </div>
-        <div class="flex items-center space-x-4">
-            <!-- Language Selector -->
-            <div class="relative">
-                <button id="language-btn" class="flex items-center text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                    <i class="ti ti-language mr-2"></i>
-                    <span id="current-lang">EN</span>
-                </button>
-                <div id="language-dropdown" class="absolute right-0 mt-2 w-32 bg-dark-800 rounded-md shadow-lg py-1 z-50 hidden">
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-dark-700" onclick="currentModule.changeLanguage('en')">
-                        <i class="ti ti-check mr-2 text-green-500" id="en-check"></i>English
+<header class="bg-dark-900 border-b border-dark-700 h-16 flex items-center justify-between px-6">
+    <!-- Left side -->
+    <div class="flex items-center">
+        <!-- Mobile menu button -->
+        <button id="mobile-menu-button" class="lg:hidden text-gray-400 hover:text-white mr-4">
+            <i class="ti ti-menu text-xl"></i>
+        </button>
+        
+        <!-- Breadcrumb -->
+        <nav class="flex" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center">
+                    <a href="/pages/dashboard.html" class="inline-flex items-center text-sm font-medium text-gray-400 hover:text-white">
+                        <i class="ti ti-home mr-2"></i>
+                        Admin
                     </a>
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-dark-700" onclick="currentModule.changeLanguage('vi')">
-                        <i class="ti ti-check mr-2 text-green-500 hidden" id="vi-check"></i>Tiếng Việt
-                    </a>
-                </div>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <i class="ti ti-chevron-right text-gray-400 mx-2"></i>
+                        <span class="text-sm font-medium text-white">Users Management</span>
+                    </div>
+                </li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- Right side -->
+    <div class="flex items-center space-x-4">
+        <!-- Search -->
+        <div class="relative hidden md:block">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i class="ti ti-search text-gray-400"></i>
             </div>
-            
-            <button id="nav-user" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                <i class="ti ti-user mr-2"></i><span data-i18n="user">User</span>
+            <input type="text" placeholder="Search..." 
+                class="bg-dark-800 border border-dark-700 text-white text-sm rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:border-blue-500 w-64">
+        </div>
+
+        <!-- Notifications -->
+        <button class="text-gray-400 hover:text-white relative">
+            <i class="ti ti-bell text-xl"></i>
+            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+        </button>
+
+        <!-- Language Selector -->
+        <div class="relative">
+            <button id="language-selector" class="flex items-center text-gray-400 hover:text-white">
+                <i class="ti ti-world mr-2"></i>
+                <span>EN</span>
+                <i class="ti ti-chevron-down ml-1"></i>
             </button>
+        </div>
+
+        <!-- User Menu -->
+        <div class="relative">
+            <button id="user-menu-button" class="flex items-center text-gray-400 hover:text-white">
+                <div class="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center mr-2">
+                    <i class="ti ti-user text-white text-sm"></i>
+                </div>
+                <span class="hidden md:block">Admin User</span>
+                <i class="ti ti-chevron-down ml-1"></i>
+            </button>
+            
+            <!-- User Dropdown Menu -->
+            <div id="user-dropdown" class="absolute right-0 mt-2 w-48 bg-dark-800 rounded-md shadow-lg py-1 z-50 hidden">
+                <a href="/pages/profile.html" class="flex items-center px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-dark-700">
+                    <i class="ti ti-user mr-3"></i>
+                    Profile
+                </a>
+                <a href="/pages/settings.html" class="flex items-center px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-dark-700">
+                    <i class="ti ti-settings mr-3"></i>
+                    Settings
+                </a>
+                <div class="border-t border-dark-700 my-1"></div>
+                <button id="logout-button" class="w-full flex items-center px-4 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-dark-700">
+                    <i class="ti ti-logout mr-3"></i>
+                    Logout
+                </button>
+            </div>
         </div>
     </div>
-</nav>
+</header>
 
 <!-- Mobile Sidebar Overlay -->
 <div id="sidebar-overlay" class="sidebar-overlay"></div> 
